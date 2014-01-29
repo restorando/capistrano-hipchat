@@ -24,7 +24,7 @@ namespace :hipchat do
       .send(fetch(:hipchat_bot_name, "Deployer"), message, message_notification: false, color: 'green')
   end
 
-  after "deploy:updating", "hipchat:notify_deploy_started"
+  after "deploy:updated", "hipchat:notify_deploy_started"
   after "deploy:finishing", "hipchat:notify_deploy_finished"
   after "deploy:reverted", "hipchat:notify_deploy_failed"
 end
