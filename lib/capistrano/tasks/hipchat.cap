@@ -1,7 +1,8 @@
 namespace :hipchat do
 
   task :notify_deploy_failed do
-    message = "#{local_user.strip} cancelled deployment of #{fetch(:application)} to #{fetch(:stage)}."
+    deployer = ENV.fetch("DEPLOYER_NAME", local_user.strip)
+    message = "#{deployer} cancelled deployment of #{fetch(:application)} to #{fetch(:stage)}."
 
     fetch(:hipchat_room)
       .send(fetch(:hipchat_bot_name, "Deployer"), message, message_notification: false, color: 'red')
@@ -10,7 +11,8 @@ namespace :hipchat do
   task :notify_deploy_started do
     commits = `git log --no-color --max-count=5 --pretty=format:' - %an: %s' --abbrev-commit --no-merges #{fetch(:previous_revision, "HEAD")}..#{fetch(:current_revision, "HEAD")}`
     commits.gsub!("\n", "<br />")
-    message = "#{local_user.strip} is deploying #{fetch(:application)} to #{fetch(:stage)} <br />"
+    deployer = ENV.fetch("DEPLOYER_NAME", local_user.strip)
+    message = "#{deployer} is deploying #{fetch(:application)} to #{fetch(:stage)} <br />"
     message << commits
 
     fetch(:hipchat_room)
