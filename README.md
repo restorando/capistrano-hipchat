@@ -7,7 +7,13 @@ for the latests commits included in the current deploy.
 
 Add this line to your application's Gemfile:
 
-    gem 'capistrano-hipchat'
+    group :deployment do
+      gem 'capistrano-hipchat'
+    end
+    
+The group declaration is optional, but it's important to make sure you only load this gem within a Capistrano script 
+(as explained below) and never within your application (eg. rails does the require of the default bundler group and
+the current environment group.
 
 And then execute:
 
