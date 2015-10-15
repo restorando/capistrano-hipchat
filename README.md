@@ -10,8 +10,8 @@ Add this line to your application's Gemfile:
     group :deployment do
       gem 'capistrano-hipchat'
     end
-    
-The group declaration is optional, but it's important to make sure you only load this gem within a Capistrano script 
+
+The group declaration is optional, but it's important to make sure you only load this gem within a Capistrano script
 (as explained below) and never within your application (eg. rails does the require of the default bundler group and
 the current environment group.
 
@@ -38,6 +38,13 @@ about the new deployment
 ```ruby
 set :hipchat_token, "YOUR TOKEN"
 set :hipchat_room_name, "Hackers"
+```
+
+To known who is deploying capistrano-hipchat relies on the custom variable
+`local_user`, you can set it like this
+
+```ruby
+set :local_user, "deployer"
 ```
 
 You can also configure:
